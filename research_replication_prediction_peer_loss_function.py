@@ -18,7 +18,9 @@ from transformers import BertTokenizer, BertConfig, BertForPreTraining
 
 #tokenizer = BertTokenizer.from_pretrained('bert-large-uncased')
 #tokenizer = BertTokenizer.from_pretrained('./uncased_L-12_H-768_A-12_AGnews_pretrain/')
-tokenizer = BertTokenizer.from_pretrained('/home/luotianyi/eclipse_workspace/20200908_bert_further_training_emnlp_corpus/uncased_L-12_H-768_A-12_AGnews_pretrain/')
+
+#replace the following directory with the one in your machine 
+tokenizer = BertTokenizer.from_pretrained('./20200908_bert_further_training_emnlp_corpus/uncased_L-12_H-768_A-12_AGnews_pretrain/')
 
 tokens = tokenizer.tokenize('Hello WORLD how ARE yoU?')
 print(tokens)
@@ -39,7 +41,8 @@ pad_token_idx = tokenizer.convert_tokens_to_ids(pad_token)
 unk_token_idx = tokenizer.convert_tokens_to_ids(unk_token)
 print(init_token_idx, eos_token_idx, pad_token_idx, unk_token_idx)
 
-max_input_length = 3000#tokenizer.max_model_input_sizes['bert-base-uncased']
+#maximum input lengh
+max_input_length = 1-000#tokenizer.max_model_input_sizes['bert-base-uncased']
 
 def tokenize_and_cut(sentence):
     tokens = tokenizer.tokenize(sentence) 
@@ -91,7 +94,8 @@ from transformers import BertTokenizer, BertModel
 
 #bert = BertModel.from_pretrained('./uncased_L-12_H-768_A-12_AGnews_pretrain/')
 
-bert = BertModel.from_pretrained('/home/luotianyi/eclipse_workspace/20200908_bert_further_training_emnlp_corpus/uncased_L-12_H-768_A-12_AGnews_pretrain/')
+#replace the following directory with the one in your machine 
+bert = BertModel.from_pretrained('./20200908_bert_further_training_emnlp_corpus/uncased_L-12_H-768_A-12_AGnews_pretrain/')
 
 
 #config = BertConfig.from_json_file('./uncased_L-12_H-768_A-12_AGnews_pretrain/bert_config.json')
@@ -355,7 +359,6 @@ def train(model, epoch, optimizer, criterion):
         alpha_coefficient = 0.1
         
     loss = loss_first - alpha_coefficient * loss_second
-    #loss = loss_first
         
     acc = binary_accuracy(predictions, train_input_label_first_item_torch_tensor)
     
@@ -369,15 +372,11 @@ def train(model, epoch, optimizer, criterion):
     #return epoch_loss / len(iterator), epoch_acc / len(iterator)
     return loss, acc
 
-# In[31]:
 def evaluate_valid(model, criterion):
     epoch_loss = 0
     epoch_acc = 0
-    
-    
     batch_num = 128
     
-    #dataset_num_total = 64#1797
     train_dataset_num = 300
     test_dataset_num = 99
     unlabelled_dataset_num = 2070
@@ -411,26 +410,20 @@ def evaluate_valid(model, criterion):
     model.eval()
     
     with torch.no_grad():
-    
-
-        predictions = model(valid_input_list_first_item_torch_tensor).squeeze(1)
-            
-        loss = criterion(predictions, valid_input_label_first_item_torch_tensor)
-            
+        predictions = model(valid_input_list_first_item_torch_tensor).squeeze(1)     
+        loss = criterion(predictions, valid_input_label_first_item_torch_tensor)  
         acc = binary_accuracy(predictions, valid_input_label_first_item_torch_tensor)
 
         epoch_loss += loss.item()
         epoch_acc += acc.item()
         
-    #return epoch_loss / len(iterator), epoch_acc / len(iterator)
     return loss, acc
 
 def evaluate(model, criterion):
     
     epoch_loss = 0
     epoch_acc = 0
-    
-    
+   
     batch_num = 128
     
     #dataset_num_total = 64#1797
@@ -467,49 +460,22 @@ def evaluate(model, criterion):
     model.eval()
     
     with torch.no_grad():
-    
-
         predictions = model(test_input_list_first_item_torch_tensor).squeeze(1)
-        
-#         for i in range(test_dataset_num):
-#             print("id: " + str(i) + "  \n")
-#             print(str(predictions[i]))
-            
         loss = criterion(predictions, test_input_label_first_item_torch_tensor)
-            
         acc = binary_accuracy(predictions, test_input_label_first_item_torch_tensor)
 
         epoch_loss += loss.item()
         epoch_acc += acc.item()
         
-    #return epoch_loss / len(iterator), epoch_acc / len(iterator)
     return loss, acc
-
-
 
 
 N_EPOCHS = 10000
 
-#model.load_state_dict(torch.load('20200326-best-model--378--tensor(0.7172, device=\'cuda:0\').pt'))
-
-#model.load_state_dict(torch.load('20200907-hard-threshould-0.55-label-max-length-3000-bert-large-batch-32-peer-loss-best-model--492--valid-tensor(0.6838, device=\'cuda:0\')--test-tensor(0.5657, device=\'cuda:0\').pt'))
-
-#model.load_state_dict(torch.load('20200907-hard-threshould-0.55-label-max-length-3000-bert-large-batch-32-peer-loss-best-model--579--valid-tensor(0.6912, device=\'cuda:0\')--test-tensor(0.5253, device=\'cuda:0\').pt'))
-
-#best_val_acc = 0.7200#float('-inf')
-#best_test_acc = 0.7172#float('-inf')
-
 best_val_acc = float('-inf')
 best_test_acc = float('-inf')
 
-#model.load_state_dict(torch.load('20200908-further-pretraining-max-length-2000-batch-32-peer-loss-best-model--979--valid-tensor(0.6300, device=\'cuda:0\')--test-tensor(0.7172, device=\'cuda:0\').pt'))
-#test_loss, test_acc = evaluate(model, criterion)
-#print(f'Test Loss: {test_loss:.3f} | Test Acc: {test_acc*100:.2f}%')
-
 for epoch in range(N_EPOCHS):
-    
-    #if epoch <= 979:
-    #    continue
     
     train_loss, train_acc = train(model, epoch, optimizer, criterion)
     valid_loss, valid_acc = evaluate_valid(model, criterion)
@@ -517,11 +483,10 @@ for epoch in range(N_EPOCHS):
 
     if valid_acc > best_val_acc:
         best_val_acc = valid_acc
-        torch.save(model.state_dict(), '20201003-further-pretraining-max-length-3000-batch-32-peer-loss-best-model--' + str(epoch) + '--valid-' + str(valid_acc) + '--test-' + str(test_acc) + '.pt')
-        #torch.save(model.state_dict(), '20200906-soft-label-max-length-10000-peer-loss-best-model--' + str(epoch) + '--' + str(test_acc) + '.pt')
+        torch.save(model.state_dict(), '20201003-further-pretraining-max-length-10000-batch-32-peer-loss-best-model--' + str(epoch) + '--valid-' + str(valid_acc) + '--test-' + str(test_acc) + '.pt')
     if test_acc > best_test_acc:
         best_test_acc = test_acc
-        torch.save(model.state_dict(), '20201003-further-pretraining-max-length-3000-batch-32-peer-loss-best-model--' + str(epoch) + '--valid-' + str(valid_acc) + '--test-' + str(test_acc) + '.pt')
+        torch.save(model.state_dict(), '20201003-further-pretraining-max-length-10000-batch-32-peer-loss-best-model--' + str(epoch) + '--valid-' + str(valid_acc) + '--test-' + str(test_acc) + '.pt')
       
     print(str(epoch) + " th iteration:\n")
     print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}%')
