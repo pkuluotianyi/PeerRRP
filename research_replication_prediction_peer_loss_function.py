@@ -16,7 +16,7 @@ torch.backends.cudnn.deterministic = True
 
 from transformers import BertTokenizer, BertConfig, BertForPreTraining
 
-#replace the following directory with the one in your machine 
+#replace the following directory (bert pretrained model) with the one in your machine 
 tokenizer = BertTokenizer.from_pretrained('./20200908_bert_further_training_emnlp_corpus/uncased_L-12_H-768_A-12_AGnews_pretrain/')
 
 tokens = tokenizer.tokenize('Hello WORLD how ARE yoU?')
@@ -87,7 +87,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 from transformers import BertTokenizer, BertModel
 
-#replace the following directory with the one in your machine 
+#replace the following directory (bert pretrained model) with the one in your machine 
 bert = BertModel.from_pretrained('./20200908_bert_further_training_emnlp_corpus/uncased_L-12_H-768_A-12_AGnews_pretrain/')
 
 import torch.nn as nn
