@@ -16,9 +16,6 @@ torch.backends.cudnn.deterministic = True
 
 from transformers import BertTokenizer, BertConfig, BertForPreTraining
 
-#tokenizer = BertTokenizer.from_pretrained('bert-large-uncased')
-#tokenizer = BertTokenizer.from_pretrained('./uncased_L-12_H-768_A-12_AGnews_pretrain/')
-
 #replace the following directory with the one in your machine 
 tokenizer = BertTokenizer.from_pretrained('./20200908_bert_further_training_emnlp_corpus/uncased_L-12_H-768_A-12_AGnews_pretrain/')
 
@@ -90,16 +87,8 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 from transformers import BertTokenizer, BertModel
 
-#bert = BertModel.from_pretrained('bert-large-uncased')
-
-#bert = BertModel.from_pretrained('./uncased_L-12_H-768_A-12_AGnews_pretrain/')
-
 #replace the following directory with the one in your machine 
 bert = BertModel.from_pretrained('./20200908_bert_further_training_emnlp_corpus/uncased_L-12_H-768_A-12_AGnews_pretrain/')
-
-
-#config = BertConfig.from_json_file('./uncased_L-12_H-768_A-12_AGnews_pretrain/bert_config.json')
-#bert = BertForPreTraining.from_pretrained('./uncased_L-12_H-768_A-12_AGnews_pretrain/model.ckpt-100.index', from_tf=True, config=config)
 
 import torch.nn as nn
 
@@ -131,44 +120,28 @@ class BERTGRUSentiment(nn.Module):
         self.dropout = nn.Dropout(dropout)
         
     def forward(self, text):
-        #print("text_length:" + str(list(text.size())[1]))
         num_sections = list(text.size())[1] // 512
-        #print("num_sections:" + str(num_sections))
-        
-        #text = [batch size, sent len]
         
         with torch.no_grad():
             embedded = self.bert(text[:,:512])[0]
-               
-        #embedded = [batch size, sent len, emb dim]
-        
+
         _all, hidden_all = self.rnn(embedded)
         
-        #hidden = [n layers * n directions, batch size, emb dim]
-        
         for i in range(num_sections - 1):
-            #print(i)
             with torch.no_grad():
                 embedded = self.bert(text[:,512*(i+1):512*(i+2)])[0]
-               
-            #embedded = [batch size, sent len, emb dim]
-            
+
             _, hidden = self.rnn(embedded)
             hidden_all += hidden
             
-            #hidden = [n layers * n directions, batch size, emb dim]
         hidden_all /= num_sections
         
         if self.rnn.bidirectional:
             hidden_all = self.dropout(torch.cat((hidden_all[-2,:,:], hidden_all[-1,:,:]), dim = 1))
         else:
             hidden_all = self.dropout(hidden_all[-1,:,:])
-                
-        #hidden = [batch size, hid dim]
-        
+    
         output = self.out(hidden_all)
-        
-        #output = [batch size, out dim]
         
         return output
 
@@ -199,7 +172,6 @@ def binary_accuracy(preds, y):
     """
     Returns accuracy per batch, i.e. if you get 8/10 right, this returns 0.8, NOT 8
     """
-    #round predictions to the closest integer
     rounded_preds = torch.round(torch.sigmoid(preds))
     correct = (rounded_preds == y).float() #convert into float for division
     acc = correct.sum() / len(correct)
@@ -210,9 +182,8 @@ def train(model, epoch, optimizer, criterion):
     
     import random
     
-    batch_num = 32#128
+    batch_num = 32
     
-    #dataset_num_total = 64#1797
     train_dataset_num = 300
     test_dataset_num = 99
     unlabelled_dataset_num = 2070
@@ -298,8 +269,6 @@ def train(model, epoch, optimizer, criterion):
     epoch_acc = 0
     
     model.train()
-    
-    #for batch in iterator:
         
     optimizer.zero_grad()
     
