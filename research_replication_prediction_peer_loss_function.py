@@ -455,8 +455,7 @@ for epoch in range(N_EPOCHS):
         torch.save(model.state_dict(), '20201003-further-pretraining-max-length-10000-batch-32-peer-loss-best-model--' + str(epoch) + '--valid-' + str(valid_acc) + '--test-' + str(test_acc) + '.pt')
     if test_acc > best_test_acc:
         best_test_acc = test_acc
-        torch.save(model.state_dict(), '20201003-further-pretraining-max-length-10000-batch-32-peer-loss-best-model--' + str(epoch) + '--valid-' + str(valid_acc) + '--test-' + str(test_acc) + '.pt')
-      
+
     print(str(epoch) + " th iteration:\n")
     print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}%')
     print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc*100:.2f}%')
