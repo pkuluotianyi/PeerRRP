@@ -20,7 +20,7 @@ Our data files used in our proposed weakly supervised learning method are in the
 
 ## Codes
 
-The code of crawling the unsupervised corpus: crawler_papers.py
+The code of crawling the unsupervised corpus: crawler_papers.py.
 
 The code of our proposed variational inference aided weakly supervised learning method: research_replication_prediction_variational_inference.py.
 
