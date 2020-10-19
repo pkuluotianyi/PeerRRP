@@ -2,7 +2,7 @@
 
 We propose two weakly supervised learning approaches that use automatically extracted text information of research papers to improve the prediction accuracy of research replication using both labeled and unlabeled datasets. 
 
-## Experiments settings
+## Experimental settings
 
 This project is tested under the following environment settings:
 - OS: Ubuntu 16.04 LTS
