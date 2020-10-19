@@ -1,8 +1,3 @@
-'''
-Created on Dec 26, 2019
-
-@author: root
-'''
 from __future__ import print_function
 from os import listdir
 from sklearn.feature_extraction.text import TfidfTransformer
