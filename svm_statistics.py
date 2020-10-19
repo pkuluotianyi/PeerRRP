@@ -50,21 +50,6 @@ with open("./data/metrics_classifier_feature_temp.csv","r") as metrics_classifie
     #X_test = X_test_original
     y_test = numpy.array(y_test_list, dtype='int64')
     
-#     clf_lr = LogisticRegression(random_state=0, solver='lbfgs', multi_class='multinomial')
-#     clf_lr.fit(X_train, y_train)
-#     score_train_lr = clf_lr.score(X_train, y_train) 
-#     predict_train_lr = clf_lr.predict(X_train)
-#     print("Accuracy on train data using LR:   " + str(score_train_lr))
-#     print("Prediction on train data using LR:   " + str(predict_train_lr))
-#     score_test_lr = clf_lr.score(X_test, y_test)
-#     predict_test_lr = clf_lr.predict(X_test)
-#     predict_proba_test_lr = clf_lr.predict_proba(X_test)
-#     print("Accuracy on test data using LR:   " + str(score_test_lr))
-#     print("Prediction on test data using LR:   " + str(predict_test_lr))
-#     print("Prediction probability on test data using LR:   " + str(predict_proba_test_lr))
-    
-    
-    
     clf_svm = svm.SVC(kernel='linear', gamma='scale', decision_function_shape='ovr', probability=True)
     clf_svm.fit(X_train, y_train)
     score_train_svm = clf_svm.score(X_train, y_train) 
@@ -79,28 +64,3 @@ with open("./data/metrics_classifier_feature_temp.csv","r") as metrics_classifie
     print("Prediction probability on test data using SVM:   " + str(predict_proba_test_svm))
     print("\n")
 
-
-#     clf_mlp = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(4*X_train.shape[1], 2), random_state=1)
-#     clf_mlp.fit(X_train, y_train)
-#     score_train_mlp = clf_mlp.score(X_train, y_train) 
-#     predict_train_mlp = clf_mlp.predict(X_train)
-#     predict_proba_test_mlp = clf_mlp.predict_proba(X_test)
-#     print("Accuracy on train data using MLP:   " + str(score_train_mlp))
-#     print("Prediction on train data using MLP:   " + str(predict_train_mlp))
-#     score_test_mlp = clf_mlp.score(X_test, y_test)
-#     predict_test_mlp = clf_mlp.predict(X_test)
-#     print("Accuracy on test data using MLP:   " + str(score_test_mlp))
-#     print("Prediction on test data using MLP:   " + str(predict_test_mlp))
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-            
-         
-        
