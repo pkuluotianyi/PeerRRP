@@ -26,5 +26,7 @@ The code of our proposed variational inference aided weakly supervised learning 
 
 The code of our proposed peer loss aided weakly supervised learning method: research_replication_prediction_peer_loss.py. The model which has 71.72% accuracy using text-only features is as follows: [71.72% model using text-only features for Peer Loss aided Weakly Supervised Learning](https://drive.google.com/file/d/1EMWTaC0KQHBwupVQ03d7VTpwQXwK83Ca/view?usp=sharing).
 
+The code of statistics model using SVM method: svm_statistics.py.
+
 Our BERT pretrained model files using our own corpus are in the following google drive link:
 [BERT pretrained model files using our own corpus](https://drive.google.com/file/d/1Wu_hp2OWe9y0Zwt9h2PdBDO6dzDvhzue/view?usp=sharing).
