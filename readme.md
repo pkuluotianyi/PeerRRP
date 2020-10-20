@@ -12,8 +12,7 @@ This project is tested under the following environment settings:
 
 ## Datasets
 
-Our data files used in our proposed weakly supervised learning method are in the following google drive link:
-[Data files for our weakly supervised learning](https://drive.google.com/drive/folders/1hvg0NtTQBtlqE7pvfN7F80vu5FEkBctu?usp=sharing).
+We will upload it later.
 
 ## Codes
 
