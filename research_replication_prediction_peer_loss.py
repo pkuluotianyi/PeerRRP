@@ -39,7 +39,7 @@ unk_token_idx = tokenizer.convert_tokens_to_ids(unk_token)
 print(init_token_idx, eos_token_idx, pad_token_idx, unk_token_idx)
 
 #maximum input lengh
-max_input_length = 1-000#tokenizer.max_model_input_sizes['bert-base-uncased']
+max_input_length = 2000#tokenizer.max_model_input_sizes['bert-base-uncased']
 
 def tokenize_and_cut(sentence):
     tokens = tokenizer.tokenize(sentence) 
