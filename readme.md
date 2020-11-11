@@ -12,7 +12,7 @@ This project is tested under the following environment settings:
 
 ## Datasets
 
-Labeled dataset: the files including the titles and links are as follows: [Train](https://github.com/pkuluotianyi/PeerRRP/blob/main/test_dataset.xlsx) and [Test](https://github.com/pkuluotianyi/PeerRRP/blob/main/test_dataset.xlsx).
+Labeled dataset: the files including the titles and links are as follows: [Train](https://github.com/pkuluotianyi/PeerRRP/blob/main/train_dataset.xlsx) and [Test](https://github.com/pkuluotianyi/PeerRRP/blob/main/test_dataset.xlsx).
 
 Unlabeled dataset: the file including the links and noisy labels is as follows: [Train_unlabeled](https://github.com/pkuluotianyi/PeerRRP/blob/main/unlabeled_dataset.csv).
 
